@@ -1,0 +1,944 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى سمر ❤️ | رسالة من القلب</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Amiri, Cairo, Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tone.js for Romantic Background Synthesizer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+    <style>
+        :root {
+            --primary-glow: rgba(244, 63, 94, 0.55);
+            --gold-accent: #f3c68f;
+            --bg-gradient: radial-gradient(circle at top right, #3b0718 0%, #1d040d 55%, #0c0105 100%);
+        }
+
+        body.theme-royal {
+            --primary-glow: rgba(217, 70, 239, 0.5);
+            --gold-accent: #f5d0fe;
+            --bg-gradient: radial-gradient(circle at top right, #2e0636 0%, #15021a 55%, #08000a 100%);
+        }
+
+        body.theme-gold {
+            --primary-glow: rgba(245, 158, 11, 0.5);
+            --gold-accent: #fde68a;
+            --bg-gradient: radial-gradient(circle at top right, #361b05 0%, #1a0b02 55%, #0a0400 100%);
+        }
+
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            background: var(--bg-gradient);
+            color: #fff5f7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.8s ease;
+        }
+
+        .font-amiri {
+            font-family: 'Amiri', serif;
+        }
+
+        .font-cairo {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 215, 225, 0.14);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), inset 0 0 20px rgba(244, 63, 94, 0.05);
+        }
+
+        .glass-input {
+            background: rgba(15, 2, 7, 0.6);
+            border: 1px solid rgba(244, 63, 94, 0.35);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .glass-input:focus {
+            outline: none;
+            border-color: #fb7185;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+        }
+
+        /* Glowing Photo Frame */
+        .photo-frame {
+            position: relative;
+            border-radius: 9999px;
+            padding: 6px;
+            background: linear-gradient(135deg, #fb7185, var(--gold-accent), #be123c);
+            box-shadow: 0 0 35px var(--primary-glow);
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 25px var(--primary-glow); transform: scale(1); }
+            50% { box-shadow: 0 0 48px var(--primary-glow); transform: scale(1.02); }
+        }
+
+        /* Floating Hearts Canvas */
+        #heartsCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Click Burst Heart Animation */
+        .burst-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 24px;
+            animation: floatUpFade 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes floatUpFade {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--dx)), calc(-50% - 110px)) scale(1.5); opacity: 0; }
+        }
+
+        /* Shimmering Gold/Rose Text */
+        .text-shimmer {
+            background: linear-gradient(90deg, #fda4af 0%, #fde68a 50%, #fb7185 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
+        /* Smooth Fade In */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #120208; }
+        ::-webkit-scrollbar-thumb { background: #881337; border-radius: 10px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-rose-500 selection:text-white">
+
+    <!-- Background Floating Hearts Canvas -->
+    <canvas id="heartsCanvas"></canvas>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#140209] transition-opacity duration-500">
+        <div class="text-5xl text-rose-500 animate-bounce mb-4">❤️</div>
+        <p class="text-rose-200 font-cairo text-lg animate-pulse">جاري تحضير عالم سمر الخاص...</p>
+    </div>
+
+    <!-- Top Floating Bar (Music & Status) -->
+    <header class="relative z-20 max-w-3xl mx-auto px-4 pt-5 flex items-center justify-between">
+        <button id="musicToggleBtn" onclick="toggleRomanticMusic()" class="glass-card px-4 py-2 rounded-full flex items-center gap-2 text-sm text-rose-200 hover:text-white hover:border-rose-400 transition cursor-pointer">
+            <i id="musicIcon" class="fas fa-music text-rose-400"></i>
+            <span id="musicText">تشغيل موسيقى هادئة</span>
+        </button>
+
+        <div id="statusBadge" class="glass-card px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 text-amber-200 border-amber-400/30">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+            <span id="statusBadgeText">وضع التجهيز والتعديل</span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="relative z-10 max-w-3xl mx-auto px-4 py-6 pb-24 space-y-8">
+
+        <!-- Hero Header -->
+        <section class="text-center space-y-3 fade-in-up">
+            <div class="inline-block px-4 py-1 rounded-full bg-rose-500/10 border border-rose-400/20 text-rose-300 text-xs tracking-wide mb-1">
+                ✨ مساحة خاصة ومخلّدة من القلب ✨
+            </div>
+            <h1 id="mainTitleDisplay" onclick="spawnHeartsBurst(event)" class="font-amiri text-4xl sm:text-6xl font-bold text-shimmer cursor-pointer select-none leading-tight py-1">
+                إلى أجمل ما في حياتي.. سمر ❤️
+            </h1>
+            <p class="text-rose-200/80 text-sm sm:text-base max-w-xl mx-auto">
+                اضغطي على اسمكِ أو صورتي في أي وقت لتتساقط القلوب لأجلكِ
+            </p>
+        </section>
+
+        <!-- ================= EDIT MODE PANEL (Hidden permanently once locked) ================= -->
+        <section id="editModePanel" class="glass-card rounded-3xl p-5 sm:p-8 border-2 border-rose-500/30 space-y-6 fade-in-up">
+            <div class="flex items-center justify-between border-b border-rose-500/20 pb-4">
+                <div>
+                    <h2 class="font-cairo text-xl font-bold text-rose-200 flex items-center gap-2">
+                        <i class="fas fa-wand-magic-sparkles text-rose-400"></i>
+                        تخصيص صفحتك لسمر
+                    </h2>
+                    <p class="text-xs text-rose-300/75 mt-1">أضف صورتك وعدّل الكلمات الحلوة، وعند الانتهاء اضغط "حفظ وقفل" ليُمنع التعديل نهائياً.</p>
+                </div>
+            </div>
+
+            <!-- Theme Picker -->
+            <div>
+                <label class="block text-sm font-semibold text-rose-200 mb-2">اختر طابع الألوان الرومانسي:</label>
+                <div class="grid grid-cols-3 gap-2 sm:gap-3">
+                    <button type="button" onclick="setTheme('crimson')" id="themeBtn-crimson" class="p-2.5 rounded-xl border border-rose-400 bg-rose-950/60 text-xs sm:text-sm font-semibold text-rose-100 flex items-center justify-center gap-2 transition">
+                        <span class="w-3 h-3 rounded-full bg-rose-500"></span> أحمر قرمزي
+                    </button>
+                    <button type="button" onclick="setTheme('royal')" id="themeBtn-royal" class="p-2.5 rounded-xl border border-white/10 bg-purple-950/40 text-xs sm:text-sm font-semibold text-purple-200 flex items-center justify-center gap-2 transition">
+                        <span class="w-3 h-3 rounded-full bg-fuchsia-500"></span> بنفسجي ملكي
+                    </button>
+                    <button type="button" onclick="setTheme('gold')" id="themeBtn-gold" class="p-2.5 rounded-xl border border-white/10 bg-amber-950/40 text-xs sm:text-sm font-semibold text-amber-200 flex items-center justify-center gap-2 transition">
+                        <span class="w-3 h-3 rounded-full bg-amber-400"></span> ذهبي دافئ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Photo Upload Section -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Primary Photo (User's Photo) -->
+                <div class="glass-card rounded-2xl p-4 text-center space-y-3 border border-rose-400/20">
+                    <label class="block text-sm font-bold text-rose-200">
+                        <i class="fas fa-camera text-rose-400 ml-1"></i> صورتك الشخصية (أساسية)
+                    </label>
+                    <div class="relative w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-dashed border-rose-400/60 flex items-center justify-center bg-rose-950/40">
+                        <img id="editPhotoPreview1" src="" alt="معاينة صورتك" class="w-full h-full object-cover hidden">
+                        <div id="editPhotoPlaceholder1" class="text-rose-300/60 text-xs px-2">
+                            <i class="fas fa-user-plus text-2xl mb-1 block"></i>
+                            اختر صورتك
+                        </div>
+                    </div>
+                    <label class="inline-block w-full py-2.5 px-4 rounded-xl bg-rose-600/80 hover:bg-rose-600 text-white text-xs sm:text-sm font-bold cursor-pointer transition shadow-lg">
+                        <i class="fas fa-upload ml-1"></i> رفع صورتي من الجهاز
+                        <input type="file" accept="image/*" onchange="handleImageUpload(event, 1)" class="hidden">
+                    </label>
+                </div>
+
+                <!-- Optional Second Photo (Samar or Together) -->
+                <div class="glass-card rounded-2xl p-4 text-center space-y-3 border border-rose-400/20">
+                    <label class="block text-sm font-bold text-rose-200">
+                        <i class="fas fa-heart text-rose-400 ml-1"></i> صورة إضافية (اختياري)
+                    </label>
+                    <div class="relative w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-dashed border-rose-400/40 flex items-center justify-center bg-rose-950/40">
+                        <img id="editPhotoPreview2" src="" alt="معاينة الصورة الثانية" class="w-full h-full object-cover hidden">
+                        <div id="editPhotoPlaceholder2" class="text-rose-300/60 text-xs px-2">
+                            <i class="fas fa-images text-2xl mb-1 block"></i>
+                            صورة ذكرى
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <label class="flex-1 py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-rose-100 text-xs font-bold cursor-pointer transition">
+                            <i class="fas fa-plus ml-1"></i> إضافة صورة
+                            <input type="file" accept="image/*" onchange="handleImageUpload(event, 2)" class="hidden">
+                        </label>
+                        <button type="button" id="removePhoto2Btn" onclick="removeSecondPhoto()" class="hidden px-3 py-2.5 rounded-xl bg-red-900/60 hover:bg-red-800 text-red-200 text-xs">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Customization Inputs -->
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-rose-200 mb-1.5">العنوان الرئيسي للصفحة:</label>
+                    <input type="text" id="inputMainTitle" oninput="syncLivePreview()" class="glass-input w-full rounded-xl px-4 py-3 text-sm sm:text-base" value="إلى أجمل ما في حياتي.. سمر ❤️">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-rose-200 mb-1.5">رسالة الحب الرئيسية لـ سمر:</label>
+                    <textarea id="inputLoveLetter" rows="5" oninput="syncLivePreview()" class="glass-input w-full rounded-xl px-4 py-3 text-sm sm:text-base leading-relaxed">يا سمر.. وجودك في حياتي هو أجمل صدفة وأغلى نعمة رزقني الله بها. في عينيكِ أجد راحتي، وفي ضحكتكِ أرى الدنيا بأكملها. أردت أن أضع صورتي هنا لتبقى أمامكِ دائماً وتذكّركِ أن هناك قلباً ينبض بحبكِ في كل ثانية.. أحبكِ فوق ما تتخيلين.</textarea>
+                </div>
+
+                <!-- 3 Sweet Cards Customization -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-rose-300 mb-1">رسالة قصيرة ١:</label>
+                        <textarea id="inputCard1" rows="3" oninput="syncLivePreview()" class="glass-input w-full rounded-xl p-3 text-xs leading-relaxed">ضحكتك يا سمر قادرة تمحي أي تعب في يومي وتخلي الدنيا كلها منورة.</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-rose-300 mb-1">رسالة قصيرة ٢:</label>
+                        <textarea id="inputCard2" rows="3" oninput="syncLivePreview()" class="glass-input w-full rounded-xl p-3 text-xs leading-relaxed">إنتِ مش بس حبيبتي، إنتِ أماني وسندي وأحلى حاجة حصلتلي في عمري.</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-rose-300 mb-1">رسالة قصيرة ٣:</label>
+                        <textarea id="inputCard3" rows="3" oninput="syncLivePreview()" class="glass-input w-full rounded-xl p-3 text-xs leading-relaxed">وعد مني هفضل جنبك وبحبك النهاردة وبكرة ولآخر العمر يا سمر.</textarea>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-rose-200 mb-1.5">رسالة سرية تظهر عند الضغط على زر المفاجأة:</label>
+                        <input type="text" id="inputSecretNote" oninput="syncLivePreview()" class="glass-input w-full rounded-xl px-4 py-2.5 text-sm" value="بحبك يا سمر أكتر من أي كلام ممكن يتكتب في الدنيا كلها ❤️💍">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-rose-200 mb-1.5">التوقيع (اسمك في نهاية الرسالة):</label>
+                        <input type="text" id="inputSignature" oninput="syncLivePreview()" class="glass-input w-full rounded-xl px-4 py-2.5 text-sm" value="حبيبك اللي بيعشقك للأبد ❤️">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permanent Save & Lock Action Button -->
+            <div class="pt-3 border-t border-rose-500/20">
+                <button type="button" onclick="openLockConfirmModal()" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-pink-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-cairo font-extrabold text-base sm:text-lg shadow-[0_10px_30px_rgba(225,29,72,0.5)] transform hover:-translate-y-0.5 transition flex items-center justify-center gap-3 cursor-pointer">
+                    <i class="fas fa-lock text-amber-200"></i>
+                    <span>حفظ وقفل الموقع نهائياً 🔒</span>
+                </button>
+                <p class="text-center text-xs text-rose-300/75 mt-2.5">
+                    ⚠️ تنبيه: بمجرد الضغط على الحفظ والقفل، ستختفي أدوات التعديل نهائياً ولن يتمكن أي شخص من تغيير الصورة أو الكلام.
+                </p>
+            </div>
+        </section>
+
+        <!-- ================= ROMANTIC DISPLAY SHOWCASE (Always visible, takes center stage when locked) ================= -->
+        <section id="showcaseSection" class="space-y-8 fade-in-up">
+
+            <!-- Photos Showcase -->
+            <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 py-2">
+                <!-- Main Photo -->
+                <div class="flex flex-col items-center space-y-3">
+                    <div onclick="spawnHeartsBurst(event)" class="photo-frame w-48 h-48 sm:w-56 sm:h-56 cursor-pointer group">
+                        <div class="w-full h-full rounded-full overflow-hidden bg-rose-950/80 relative">
+                            <img id="displayPhoto1" src="" alt="صورتي لـ سمر" class="w-full h-full object-cover hidden transition duration-500 group-hover:scale-105">
+                            <div id="displayPhotoFallback1" class="w-full h-full flex flex-col items-center justify-center text-rose-200/70 p-4 text-center">
+                                <i class="fas fa-heart text-4xl text-rose-500 mb-2 animate-pulse"></i>
+                                <span class="text-xs">هنا ستظهر صورتك الجميلة لـ سمر</span>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="px-4 py-1 rounded-full glass-card text-xs text-amber-200 font-semibold">
+                        معكِ دائماً بقلبي وروحي ✨
+                    </span>
+                </div>
+
+                <!-- Optional Second Photo -->
+                <div id="displayPhoto2Wrapper" class="hidden flex-col items-center space-y-3">
+                    <div onclick="spawnHeartsBurst(event)" class="photo-frame w-44 h-44 sm:w-52 sm:h-52 cursor-pointer group">
+                        <div class="w-full h-full rounded-full overflow-hidden bg-rose-950/80">
+                            <img id="displayPhoto2" src="" alt="ذكرى جميلة" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                        </div>
+                    </div>
+                    <span class="px-4 py-1 rounded-full glass-card text-xs text-rose-200 font-semibold">
+                        أجمل ذكرياتنا ❤️
+                    </span>
+                </div>
+            </div>
+
+            <!-- Main Love Letter Card -->
+            <div class="glass-card rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+                <div class="absolute -top-10 -left-10 text-8xl text-rose-500/10 pointer-events-none select-none">❝</div>
+                <div class="absolute -bottom-10 -right-10 text-8xl text-rose-500/10 pointer-events-none select-none">❞</div>
+
+                <div class="flex items-center justify-center gap-2 text-amber-300 mb-4">
+                    <i class="fas fa-sparkles"></i>
+                    <span class="font-cairo font-bold text-sm tracking-wider">رسالة من القلب إلى سمر</span>
+                    <i class="fas fa-sparkles"></i>
+                </div>
+
+                <p id="displayLoveLetter" class="font-amiri text-xl sm:text-2xl text-rose-50 leading-loose text-center whitespace-pre-line">
+                    يا سمر.. وجودك في حياتي هو أجمل صدفة وأغلى نعمة رزقني الله بها. في عينيكِ أجد راحتي، وفي ضحكتكِ أرى الدنيا بأكملها. أردت أن أضع صورتي هنا لتبقى أمامكِ دائماً وتذكّركِ أن هناك قلباً ينبض بحبكِ في كل ثانية.. أحبكِ فوق ما تتخيلين.
+                </p>
+
+                <div class="mt-8 pt-4 border-t border-rose-400/15 text-center">
+                    <p id="displaySignature" class="font-cairo font-bold text-base sm:text-lg text-amber-200">
+                        حبيبك اللي بيعشقك للأبد ❤️
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3 Romantic Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div onclick="spawnHeartsBurst(event)" class="glass-card rounded-2xl p-5 text-center space-y-3 hover:border-rose-400/40 transition transform hover:-translate-y-1 cursor-pointer">
+                    <div class="w-11 h-11 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto text-lg">
+                        <i class="fas fa-smile-beam"></i>
+                    </div>
+                    <h3 class="font-cairo font-bold text-amber-200 text-sm">سر سعادتي</h3>
+                    <p id="displayCard1" class="text-rose-100/90 text-sm leading-relaxed">
+                        ضحكتك يا سمر قادرة تمحي أي تعب في يومي وتخلي الدنيا كلها منورة.
+                    </p>
+                </div>
+
+                <div onclick="spawnHeartsBurst(event)" class="glass-card rounded-2xl p-5 text-center space-y-3 hover:border-rose-400/40 transition transform hover:-translate-y-1 cursor-pointer">
+                    <div class="w-11 h-11 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center mx-auto text-lg">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3 class="font-cairo font-bold text-amber-200 text-sm">مكانتك في قلبي</h3>
+                    <p id="displayCard2" class="text-rose-100/90 text-sm leading-relaxed">
+                        إنتِ مش بس حبيبتي، إنتِ أماني وسندي وأحلى حاجة حصلتلي في عمري.
+                    </p>
+                </div>
+
+                <div onclick="spawnHeartsBurst(event)" class="glass-card rounded-2xl p-5 text-center space-y-3 hover:border-rose-400/40 transition transform hover:-translate-y-1 cursor-pointer">
+                    <div class="w-11 h-11 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center mx-auto text-lg">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h3 class="font-cairo font-bold text-amber-200 text-sm">وعدي ليكِ</h3>
+                    <p id="displayCard3" class="text-rose-100/90 text-sm leading-relaxed">
+                        وعد مني هفضل جنبك وبحبك النهاردة وبكرة ولآخر العمر يا سمر.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interactive Secret Surprise Card for Samar -->
+            <div class="glass-card rounded-3xl p-6 text-center space-y-4 border border-amber-400/25">
+                <h3 class="font-cairo font-bold text-lg text-rose-200">
+                    صندوق المفاجأة الصغيرة لـ سمر 🎁
+                </h3>
+                <button id="revealSecretBtn" onclick="revealSecretMessage(event)" class="px-6 py-3 rounded-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-400 hover:to-pink-500 text-white font-bold text-sm shadow-lg transition transform active:scale-95 cursor-pointer">
+                    <i class="fas fa-envelope-open-text ml-2"></i> اضغطي هنا لفتح الرسالة السرية يا سمر
+                </button>
+                <div id="secretMessageBox" class="hidden pt-3 animate-fade-in">
+                    <div class="p-4 rounded-2xl bg-rose-950/70 border border-amber-300/40 text-amber-200 font-cairo font-bold text-base sm:text-lg shadow-inner">
+                        <span id="displaySecretNote">بحبك يا سمر أكتر من أي كلام ممكن يتكتب في الدنيا كلها ❤️💍</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Share & Permanent Lock Footer (Visible when Locked) -->
+            <div id="lockedFooterActions" class="hidden glass-card rounded-2xl p-5 text-center space-y-4 border border-emerald-500/30">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/15 text-emerald-300 text-xs font-bold">
+                    <i class="fas fa-shield-halved"></i>
+                    <span>تم حفظ وقفل هذا الموقع نهائياً — محمي ضد أي تعديل</span>
+                </div>
+                <div>
+                    <button onclick="copyShareLink()" class="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-rose-300/30 text-rose-100 font-cairo font-bold text-sm transition flex items-center justify-center gap-2 mx-auto cursor-pointer">
+                        <i class="fas fa-share-nodes text-rose-400"></i>
+                        <span>نسخ رابط الصفحة لإرساله لـ سمر 💌</span>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Custom Confirmation Modal (No browser alert/confirm) -->
+    <div id="lockConfirmModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-8 border border-rose-500/40 text-center space-y-5 shadow-2xl">
+            <div class="w-16 h-16 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto text-3xl">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h3 class="font-cairo text-xl font-extrabold text-white">
+                تأكيد الحفظ والقفل النهائي
+            </h3>
+            <p class="text-rose-200/90 text-sm leading-relaxed">
+                هل أنت متأكد من حفظ صورتك وكلامك لـ <strong class="text-amber-300">سمر</strong> وقفل الموقع نهائياً؟
+                <br><br>
+                <span class="text-rose-400 font-semibold">بعد التأكيد، لن يتمكن أي شخص من تعديل الصورة أو النصوص مرة أخرى أبداً.</span>
+            </p>
+            <div class="flex gap-3 pt-2">
+                <button onclick="closeLockConfirmModal()" class="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-rose-200 font-bold text-sm transition cursor-pointer">
+                    تراجع للتعديل
+                </button>
+                <button id="confirmLockExecuteBtn" onclick="confirmAndLockForever()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-bold text-sm shadow-lg transition cursor-pointer">
+                    نعم، احفظ واقفل 🔒
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Banner -->
+    <div id="toastBanner" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden px-5 py-3 rounded-full bg-rose-950/95 border border-rose-400/50 text-rose-100 text-sm font-cairo font-semibold shadow-2xl items-center gap-2">
+        <i id="toastIcon" class="fas fa-check-circle text-emerald-400"></i>
+        <span id="toastMessage">تم الحفظ بنجاح</span>
+    </div>
+
+    <!-- Firebase SDK & Application Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global App State
+        const appState = {
+            isLocked: false,
+            theme: 'crimson',
+            photo1: '',
+            photo2: '',
+            mainTitle: 'إلى أجمل ما في حياتي.. سمر ❤️',
+            loveLetter: 'يا سمر.. وجودك في حياتي هو أجمل صدفة وأغلى نعمة رزقني الله بها. في عينيكِ أجد راحتي، وفي ضحكتكِ أرى الدنيا بأكملها. أردت أن أضع صورتي هنا لتبقى أمامكِ دائماً وتذكّركِ أن هناك قلباً ينبض بحبكِ في كل ثانية.. أحبكِ فوق ما تتخيلين.',
+            card1: 'ضحكتك يا سمر قادرة تمحي أي تعب في يومي وتخلي الدنيا كلها منورة.',
+            card2: 'إنتِ مش بس حبيبتي، إنتِ أماني وسندي وأحلى حاجة حصلتلي في عمري.',
+            card3: 'وعد مني هفضل جنبك وبحبك النهاردة وبكرة ولآخر العمر يا سمر.',
+            secretNote: 'بحبك يا سمر أكتر من أي كلام ممكن يتكتب في الدنيا كلها ❤️💍',
+            signature: 'حبيبك اللي بيعشقك للأبد ❤️'
+        };
+
+        // Determine unique page ID from URL hash or default so shared links open the exact locked page
+        function getPageId() {
+            const hash = window.location.hash.replace('#', '').trim();
+            if (hash && /^[a-zA-Z0-9_-]+$/.test(hash)) {
+                return hash;
+            }
+            const newId = 'samar_' + Math.random().toString(36).substring(2, 10);
+            try {
+                window.history.replaceState(null, '', '#' + newId);
+            } catch (e) {}
+            return newId;
+        }
+
+        const pageId = getPageId();
+        const LOCAL_CACHE_KEY = 'samar_locked_shrine_' + pageId;
+
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'samar-love-app';
+
+        // Initialize Firebase & Load Saved State
+        async function initApp() {
+            try {
+                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                    const firebaseConfig = JSON.parse(__firebase_config);
+                    const app = initializeApp(firebaseConfig);
+                    auth = getAuth(app);
+                    db = getFirestore(app);
+
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        const cred = await signInWithCustomToken(auth, __initial_auth_token);
+                        currentUser = cred.user;
+                    } else {
+                        const cred = await signInAnonymously(auth);
+                        currentUser = cred.user;
+                    }
+                }
+            } catch (err) {
+                console.warn("Firebase init fallback mode:", err);
+            }
+
+            await loadSavedData();
+            applyStateToUI();
+
+            // Hide Loading Overlay
+            const loader = document.getElementById('loadingOverlay');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.classList.add('hidden'), 500);
+        }
+
+        // Load data from Firestore (public path so Samar can view via link) or fallback cache
+        async function loadSavedData() {
+            let loaded = null;
+
+            // 1. Try Firestore first
+            if (db && currentUser) {
+                try {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'samar_pages', pageId);
+                    const snap = await getDoc(docRef);
+                    if (snap.exists()) {
+                        loaded = snap.data();
+                    }
+                } catch (e) {
+                    console.warn("Firestore read fallback:", e);
+                }
+            }
+
+            // 2. Fallback to window.name or local cache if Firestore wasn't available
+            if (!loaded) {
+                try {
+                    const raw = localStorage.getItem(LOCAL_CACHE_KEY);
+                    if (raw) loaded = JSON.parse(raw);
+                } catch (e) {}
+            }
+
+            if (loaded) {
+                Object.assign(appState, loaded);
+            }
+        }
+
+        // Apply current state to DOM & enforce Lock if isLocked === true
+        function applyStateToUI() {
+            // Theme
+            setTheme(appState.theme || 'crimson', false);
+
+            // Texts
+            document.getElementById('mainTitleDisplay').textContent = appState.mainTitle;
+            document.getElementById('displayLoveLetter').textContent = appState.loveLetter;
+            document.getElementById('displayCard1').textContent = appState.card1;
+            document.getElementById('displayCard2').textContent = appState.card2;
+            document.getElementById('displayCard3').textContent = appState.card3;
+            document.getElementById('displaySecretNote').textContent = appState.secretNote;
+            document.getElementById('displaySignature').textContent = appState.signature;
+
+            // Photos
+            updatePhotoDisplay(1, appState.photo1);
+            updatePhotoDisplay(2, appState.photo2);
+
+            // Enforce Permanent Lock Mode
+            if (appState.isLocked) {
+                const editPanel = document.getElementById('editModePanel');
+                if (editPanel) editPanel.remove(); // Completely remove edit DOM from page
+
+                const modal = document.getElementById('lockConfirmModal');
+                if (modal) modal.remove();
+
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.className = 'glass-card px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 text-rose-200 border-rose-400/30';
+                statusBadge.innerHTML = '<i class="fas fa-heart text-rose-500 animate-pulse"></i><span>مُهدى إلى سمر للأبد</span>';
+
+                document.getElementById('lockedFooterActions').classList.remove('hidden');
+            } else {
+                // Populate inputs in edit mode
+                document.getElementById('inputMainTitle').value = appState.mainTitle;
+                document.getElementById('inputLoveLetter').value = appState.loveLetter;
+                document.getElementById('inputCard1').value = appState.card1;
+                document.getElementById('inputCard2').value = appState.card2;
+                document.getElementById('inputCard3').value = appState.card3;
+                document.getElementById('inputSecretNote').value = appState.secretNote;
+                document.getElementById('inputSignature').value = appState.signature;
+            }
+        }
+
+        function updatePhotoDisplay(slot, dataUrl) {
+            if (slot === 1) {
+                const dispImg = document.getElementById('displayPhoto1');
+                const dispFallback = document.getElementById('displayPhotoFallback1');
+                const editImg = document.getElementById('editPhotoPreview1');
+                const editPlaceholder = document.getElementById('editPhotoPlaceholder1');
+
+                if (dataUrl) {
+                    dispImg.src = dataUrl;
+                    dispImg.classList.remove('hidden');
+                    dispFallback.classList.add('hidden');
+                    if (editImg) {
+                        editImg.src = dataUrl;
+                        editImg.classList.remove('hidden');
+                        editPlaceholder.classList.add('hidden');
+                    }
+                }
+            } else if (slot === 2) {
+                const dispWrap = document.getElementById('displayPhoto2Wrapper');
+                const dispImg = document.getElementById('displayPhoto2');
+                const editImg = document.getElementById('editPhotoPreview2');
+                const editPlaceholder = document.getElementById('editPhotoPlaceholder2');
+                const removeBtn = document.getElementById('removePhoto2Btn');
+
+                if (dataUrl) {
+                    dispImg.src = dataUrl;
+                    dispWrap.classList.remove('hidden');
+                    dispWrap.classList.add('flex');
+                    if (editImg) {
+                        editImg.src = dataUrl;
+                        editImg.classList.remove('hidden');
+                        editPlaceholder.classList.add('hidden');
+                        removeBtn.classList.remove('hidden');
+                    }
+                } else {
+                    dispWrap.classList.add('hidden');
+                    dispWrap.classList.remove('flex');
+                    if (editImg) {
+                        editImg.src = '';
+                        editImg.classList.add('hidden');
+                        editPlaceholder.classList.remove('hidden');
+                        removeBtn.classList.add('hidden');
+                    }
+                }
+            }
+        }
+
+        // Compress uploaded image via Canvas so it fits cleanly within Firestore 1MB document limit
+        window.handleImageUpload = function(event, slot) {
+            if (appState.isLocked) return;
+            const file = event.target.files?.[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_DIM = 700;
+                    let w = img.width;
+                    let h = img.height;
+
+                    if (w > h && w > MAX_DIM) {
+                        h = Math.round((h * MAX_DIM) / w);
+                        w = MAX_DIM;
+                    } else if (h > MAX_DIM) {
+                        w = Math.round((w * MAX_DIM) / h);
+                        h = MAX_DIM;
+                    }
+
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, w, h);
+
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+                    if (slot === 1) {
+                        appState.photo1 = compressedDataUrl;
+                    } else {
+                        appState.photo2 = compressedDataUrl;
+                    }
+                    updatePhotoDisplay(slot, compressedDataUrl);
+                    showToast('تم رفع الصورة بنجاح ✨');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        window.removeSecondPhoto = function() {
+            if (appState.isLocked) return;
+            appState.photo2 = '';
+            updatePhotoDisplay(2, '');
+        };
+
+        window.syncLivePreview = function() {
+            if (appState.isLocked) return;
+            appState.mainTitle = document.getElementById('inputMainTitle').value || 'إلى سمر ❤️';
+            appState.loveLetter = document.getElementById('inputLoveLetter').value;
+            appState.card1 = document.getElementById('inputCard1').value;
+            appState.card2 = document.getElementById('inputCard2').value;
+            appState.card3 = document.getElementById('inputCard3').value;
+            appState.secretNote = document.getElementById('inputSecretNote').value;
+            appState.signature = document.getElementById('inputSignature').value;
+
+            document.getElementById('mainTitleDisplay').textContent = appState.mainTitle;
+            document.getElementById('displayLoveLetter').textContent = appState.loveLetter;
+            document.getElementById('displayCard1').textContent = appState.card1;
+            document.getElementById('displayCard2').textContent = appState.card2;
+            document.getElementById('displayCard3').textContent = appState.card3;
+            document.getElementById('displaySecretNote').textContent = appState.secretNote;
+            document.getElementById('displaySignature').textContent = appState.signature;
+        };
+
+        window.setTheme = function(themeName, notify = true) {
+            if (appState.isLocked && notify) return;
+            appState.theme = themeName;
+            document.body.classList.remove('theme-royal', 'theme-gold');
+            if (themeName === 'royal') document.body.classList.add('theme-royal');
+            if (themeName === 'gold') document.body.classList.add('theme-gold');
+        };
+
+        window.openLockConfirmModal = function() {
+            if (appState.isLocked) return;
+            syncLivePreview();
+            if (!appState.photo1) {
+                showToast('من فضلك ارفع صورتك أولاً قبل القفل 📸', true);
+                return;
+            }
+            const modal = document.getElementById('lockConfirmModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        };
+
+        window.closeLockConfirmModal = function() {
+            const modal = document.getElementById('lockConfirmModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        };
+
+        // Permanently Save & Lock the website
+        window.confirmAndLockForever = async function() {
+            if (appState.isLocked) return;
+
+            const btn = document.getElementById('confirmLockExecuteBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin ml-1"></i> جاري الحفظ والقفل...';
+
+            syncLivePreview();
+            appState.isLocked = true;
+            appState.lockedAt = new Date().toISOString();
+
+            // Save to Firestore so anyone with the URL sees the locked version
+            if (db && currentUser) {
+                try {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'samar_pages', pageId);
+                    await setDoc(docRef, appState);
+                } catch (err) {
+                    console.error("Firestore save error:", err);
+                }
+            }
+
+            // Also save to localStorage backup
+            try {
+                localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(appState));
+            } catch (e) {}
+
+            closeLockConfirmModal();
+            applyStateToUI();
+            spawnHeartsBurst({ clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 });
+            showToast('تم حفظ وقفل الموقع نهائياً لـ سمر 🔒❤️');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.revealSecretMessage = function(event) {
+            const box = document.getElementById('secretMessageBox');
+            const btn = document.getElementById('revealSecretBtn');
+            box.classList.remove('hidden');
+            btn.innerHTML = '<i class="fas fa-heart text-amber-200 ml-2"></i> رسالة خاصة لعيونك يا سمر';
+            spawnHeartsBurst(event);
+        };
+
+        window.copyShareLink = function() {
+            const url = window.location.href;
+            const tempInput = document.createElement('input');
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast('تم نسخ الرابط! أرسله لـ سمر الآن 💌');
+        };
+
+        function showToast(msg, isWarning = false) {
+            const toast = document.getElementById('toastBanner');
+            const icon = document.getElementById('toastIcon');
+            const text = document.getElementById('toastMessage');
+
+            text.textContent = msg;
+            icon.className = isWarning
+                ? 'fas fa-exclamation-circle text-amber-400'
+                : 'fas fa-check-circle text-emerald-400';
+
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 3500);
+        }
+
+        // Start App
+        initApp();
+    </script>
+
+    <!-- Non-module Visual Effects & Romantic Synthesizer Script -->
+    <script>
+        // 1. Floating Hearts Canvas Background
+        const canvas = document.getElementById('heartsCanvas');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class FloatingHeart {
+            constructor() {
+                this.reset(true);
+            }
+            reset(initial = false) {
+                this.x = Math.random() * canvas.width;
+                this.y = initial ? Math.random() * canvas.height : canvas.height + 30;
+                this.size = Math.random() * 14 + 8;
+                this.speedY = Math.random() * 0.8 + 0.35;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.45 + 0.15;
+                this.char = Math.random() > 0.3 ? '❤️' : '✨';
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < -30) this.reset(false);
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.font = `${this.size}px serif`;
+                ctx.fillText(this.char, this.x, this.y);
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 28; i++) {
+            hearts.push(new FloatingHeart());
+        }
+
+        function animateHearts() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach(h => {
+                h.update();
+                h.draw();
+            });
+            requestAnimationFrame(animateHearts);
+        }
+        animateHearts();
+
+        // 2. Interactive Heart Explosion on Click/Tap
+        function spawnHeartsBurst(e) {
+            const x = e?.clientX || window.innerWidth / 2;
+            const y = e?.clientY || window.innerHeight / 2;
+            const emojis = ['❤️', '💖', '💕', '🌹', '✨'];
+
+            for (let i = 0; i < 10; i++) {
+                const el = document.createElement('div');
+                el.className = 'burst-heart';
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                const dx = (Math.random() - 0.5) * 160;
+                el.style.setProperty('--dx', `${dx}px`);
+                el.style.left = `${x}px`;
+                el.style.top = `${y}px`;
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1300);
+            }
+        }
+
+        // 3. Soft Romantic Ambient Melody using Tone.js (No external audio files needed)
+        let isPlayingMusic = false;
+        let melodyLoop = null;
+        let synth = null;
+
+        async function toggleRomanticMusic() {
+            const btnText = document.getElementById('musicText');
+            const btnIcon = document.getElementById('musicIcon');
+
+            if (!isPlayingMusic) {
+                await Tone.start();
+                if (!synth) {
+                    const reverb = new Tone.Reverb({ decay: 4, wet: 0.5 }).toDestination();
+                    synth = new Tone.PolySynth(Tone.Synth, {
+                        oscillator: { type: 'sine' },
+                        envelope: { attack: 0.4, decay: 0.8, sustain: 0.4, release: 2.2 }
+                    }).connect(reverb);
+                    synth.volume.value = -14;
+
+                    const notes = [
+                        ['C4', 'E4', 'G4'], ['A3', 'C4', 'E4'],
+                        ['F3', 'A3', 'C4'], ['G3', 'B3', 'D4']
+                    ];
+                    let step = 0;
+                    melodyLoop = new Tone.Loop((time) => {
+                        synth.triggerAttackRelease(notes[step % notes.length], '1n', time);
+                        step++;
+                    }, '2n');
+                }
+                Tone.Transport.start();
+                melodyLoop.start(0);
+                isPlayingMusic = true;
+                btnText.textContent = 'إيقاف الموسيقى';
+                btnIcon.className = 'fas fa-pause-circle text-amber-300 animate-pulse';
+            } else {
+                melodyLoop.stop();
+                Tone.Transport.pause();
+                isPlayingMusic = false;
+                btnText.textContent = 'تشغيل موسيقى هادئة';
+                btnIcon.className = 'fas fa-music text-rose-400';
+            }
+        }
+    </script>
+</body>
+</html>
+```
